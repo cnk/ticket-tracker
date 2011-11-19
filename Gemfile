@@ -19,6 +19,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'dynamic_form'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.5'
@@ -28,6 +29,7 @@ group :test do
   gem 'cucumber-rails'
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'shoulda-matchers'
 end
 
 # To use ActiveModel has_secure_password

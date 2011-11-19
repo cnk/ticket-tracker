@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @ticket.title %>
+</p>
+
+<p>
+  <b>Project:</b>
+  <%= @project.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= simple_format(@ticket.description) %>
+</p>
+
+<p>
+<%= link_to 'New Ticket', new_project_ticket_path(@project) %> |
+<%= link_to @project.name, @project %> |
+<%= link_to 'All Projects', projects_path %>
+</p>
+

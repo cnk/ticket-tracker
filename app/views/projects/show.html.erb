@@ -5,8 +5,19 @@
   <%= @project.name %>
 </p>
 
+<b>Tickets:</b>
+<ol>
+  <% for ticket in @project.tickets -%>
+  <li><%= link_to ticket.title, [@project, ticket] %></li>
+  <% end -%>
+</ol>
+
+<p>
+<%= link_to 'New Ticket', new_project_ticket_path(@project) %>
+</p>
+
 <p>
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Delete', @project, confirm: 'Are you sure?', method: :delete %> |
-<%= link_to 'Back', projects_path %>
+<%= link_to 'All Projects', projects_path %>
 </p>
