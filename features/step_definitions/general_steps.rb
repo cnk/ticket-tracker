@@ -29,5 +29,5 @@ Then /^I should not see a link to "([^\"]*)"$/ do |link_destination|
 end
 
 Then /^show me the page$/ do
-  puts response.body
+  puts page.body
 end
