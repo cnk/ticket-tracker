@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  before_filter :find_project, :only => [:show, :edit, :update, :destroy]
+
   # GET /projects
   # GET /projects.json
   def index
@@ -13,8 +15,6 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-    @project = Project.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @project }
@@ -34,7 +34,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    @project = Project.find(params[:id])
   end
 
   # POST /projects
@@ -56,8 +55,6 @@ class ProjectsController < ApplicationController
   # PUT /projects/1
   # PUT /projects/1.json
   def update
-    @project = Project.find(params[:id])
-
     respond_to do |format|
       if @project.update_attributes(params[:project])
         format.html { redirect_to @project, notice: 'Project has been updated.' }
@@ -72,12 +69,21 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
-    @project = Project.find(params[:id])
     @project.destroy
 
     respond_to do |format|
       format.html { redirect_to projects_url }
       format.json { head :ok }
+    end
+  end
+
+  private
+  def find_project
+    begin
+      @project = Project.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "The project you were looking for cannot be found."
+      redirect_to projects_path
     end
   end
 end
