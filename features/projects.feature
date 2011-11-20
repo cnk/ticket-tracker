@@ -10,7 +10,7 @@ Scenario: create new project
   Then I should see "Project has been created." 
   And I should see "Content Management System"
 
-Scenario: create new project
+Scenario: edit a project
   Given there is a project named "Desing"
   And I am on the home page
   When I click on "Desing"
@@ -18,3 +18,11 @@ Scenario: create new project
   And I change the name to "Design"
   Then I should see "Project has been updated." 
   And I should see "Design"
+
+Scenario: delete a project
+  Given there is a project named "Boring"
+  And I am on the home page
+  When I click on "Boring"
+  And I click on "Delete"
+  Then I should see "Project has been deleted." 
+  And I should not see "Boring"

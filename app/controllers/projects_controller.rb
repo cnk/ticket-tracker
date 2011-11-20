@@ -15,6 +15,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @tickets = @project.tickets
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @project }
@@ -32,10 +33,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # GET /projects/1/edit
-  def edit
-  end
-
   # POST /projects
   # POST /projects.json
   def create
@@ -50,6 +47,10 @@ class ProjectsController < ApplicationController
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET /projects/1/edit
+  def edit
   end
 
   # PUT /projects/1
@@ -72,12 +73,13 @@ class ProjectsController < ApplicationController
     @project.destroy
 
     respond_to do |format|
-      format.html { redirect_to projects_url }
+      format.html { redirect_to projects_url, notice: 'Project has been deleted.' }
       format.json { head :ok }
     end
   end
 
-  private
+private
+
   def find_project
     begin
       @project = Project.find(params[:id])

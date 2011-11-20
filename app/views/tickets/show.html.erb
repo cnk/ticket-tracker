@@ -16,6 +16,8 @@
 </p>
 
 <p>
+<%= link_to 'Edit', [:edit, @project, @ticket] %> |
+<%= link_to 'Delete', [@project, @ticket], confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'New Ticket', new_project_ticket_path(@project) %> |
 <%= link_to @project.name, @project %> |
 <%= link_to 'All Projects', projects_path %>

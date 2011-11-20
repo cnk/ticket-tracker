@@ -28,7 +28,6 @@ describe TicketsController do
 
   describe "GET 'new'" do
     before(:each) do
-      @project = Project.create!(:name => 'Ticketable')
       get :new, :project_id => @project.id
     end
     
@@ -69,6 +68,41 @@ describe TicketsController do
         Ticket.any_instance.stub(:save).and_return(false)
         post :create, :project_id => @project.id, :ticket => {}
         response.should render_template("new")
+      end
+    end
+  end
+
+  describe "GET 'edit'" do
+    it "should retrieve the existing ticket information" do
+      @ticket = Ticket.create!(valid_attributes)
+      get :edit, :project_id => @project.id, :id => @ticket.id 
+      assigns(:ticket).should == @ticket
+    end
+  end
+
+  describe "PUT update" do
+    before(:each) do
+      @ticket = Ticket.create!(valid_attributes)
+    end
+
+    describe "with valid params" do
+      it "updates the ticket information" do
+        @ticket.title.should == valid_attributes[:title]
+        put :update, :id => @ticket.id, :project_id => @project.id, :ticket => {:title => "New name", :description => "New description"}
+        Ticket.find(@ticket.id).title.should == "New name"
+      end
+
+      it "redirects to the updated ticket" do
+        put :update, :id => @ticket.id, :project_id => @project.id, :ticket => {:title => "New name", :description => "New description"}
+        response.should redirect_to([@project, assigns(:ticket)])
+      end
+    end
+
+    describe "with invalid params" do
+      it "re-renders the 'edit' template" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        put :update, :id => @ticket.id, :project_id => @project.id, :ticket => {:title => "", :description => ""}
+        response.should render_template("edit")
       end
     end
   end

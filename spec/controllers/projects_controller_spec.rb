@@ -36,10 +36,17 @@ describe ProjectsController do
   end
 
   describe "GET show" do
+    before(:each) do
+      @project = Project.create! valid_attributes
+      get :show, :id => @project.id
+    end
+
     it "assigns the requested project as @project" do
-      project = Project.create! valid_attributes
-      get :show, :id => project.id
-      assigns(:project).should eq(project)
+      assigns(:project).should eq(@project)
+    end
+
+    it "displays the tickets for this project" do
+      assigns(:tickets).should eq(@project.tickets)
     end
   end
 
@@ -47,14 +54,6 @@ describe ProjectsController do
     it "assigns a new project as @project" do
       get :new
       assigns(:project).should be_a_new(Project)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested project as @project" do
-      project = Project.create! valid_attributes
-      get :edit, :id => project.id
-      assigns(:project).should eq(project)
     end
   end
 
@@ -92,6 +91,14 @@ describe ProjectsController do
         post :create, :project => {}
         response.should render_template("new")
       end
+    end
+  end
+
+  describe "GET edit" do
+    it "assigns the requested project as @project" do
+      project = Project.create! valid_attributes
+      get :edit, :id => project.id
+      assigns(:project).should eq(project)
     end
   end
 
