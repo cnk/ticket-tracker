@@ -1,4 +1,6 @@
 TicketTracker::Application.routes.draw do
+  devise_for :users
+
   match 'tickets/new' => 'tickets#new'
   root :to => 'projects#index'
   resources :projects do

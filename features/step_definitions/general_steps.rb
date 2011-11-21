@@ -16,6 +16,10 @@ When /^I click the "([^"]*)" button$/ do |button|
   click_button button
 end
 
+When /^I fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
+  page.fill_in field, :with => value
+end
+
 Then /^I should see "([^"]*)"$/ do |text|
   page.should have_content(text)
 end

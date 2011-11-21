@@ -20,6 +20,7 @@ end
 
 gem 'jquery-rails'
 gem 'dynamic_form'
+gem 'devise'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.5'
@@ -30,6 +31,7 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'shoulda-matchers'
+  gem 'email_spec'
 end
 
 # To use ActiveModel has_secure_password

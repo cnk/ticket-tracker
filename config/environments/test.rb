@@ -36,4 +36,7 @@ TicketTracker::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Devise install instructions suggested setting this
+  config.action_mailer.default_url_options = { :host => 'dev.cynthiakiser.com' }
 end
