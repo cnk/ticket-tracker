@@ -4,7 +4,8 @@ describe "tickets/show.html.erb" do
   before(:each) do
     @project = assign(:project, stub_model(Project,
       :name => "My Project"))
-    @ticket = assign(:ticket, stub_model(Ticket, :title => "Ticket title", :description => "Problem"))
+    @ticket = assign(:ticket, stub_model(Ticket, :title => "Ticket title", :description => "Problem", 
+                                         :user => stub_model(User, :id => 1, :email => "someone@example.com")))
   end
 
   it "displays the project name" do

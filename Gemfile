@@ -32,6 +32,7 @@ group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers'
   gem 'email_spec'
+  gem 'factory_girl_rails'
 end
 
 # To use ActiveModel has_secure_password

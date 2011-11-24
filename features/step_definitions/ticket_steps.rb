@@ -11,6 +11,14 @@ Given /^that project has a ticket:$/ do |table|
   end
 end
 
+Given /^"([^"]*)" has created a ticket in that project:$/ do |email, table|
+  # table is a Cucumber::Ast::Table
+  table.hashes.each do |attributes|
+    attributes = attributes.merge!(:user => User.find_by_email!(email))
+    @project.tickets.create!(attributes)
+  end
+end
+
 When /^I change the description to be "([^"]*)"$/ do |description|
   page.fill_in 'Description', :with => description
   page.click_button 'Update Ticket'

@@ -1,8 +1,18 @@
 require 'spec_helper'
 
 describe TicketsController do
-  before(:each) do
-      @project = Project.create!(:name => 'First Project')
+  before(:all) do
+    @project = Factory.create(:project)
+    @user = Factory.create(:user)
+  end
+
+  before(:each) do 
+    sign_in @user
+  end
+
+  after(:all) do
+    @project.destroy
+    @user.destroy
   end
 
   def valid_attributes

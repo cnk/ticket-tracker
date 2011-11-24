@@ -1,4 +1,5 @@
 class TicketsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:index, :show]
   before_filter :find_project
   before_filter :find_ticket, :only => [:show, :edit, :update, :destroy]
 
@@ -25,7 +26,7 @@ class TicketsController < ApplicationController
   # POST /projects/1/tickets
   # POST /projects/1/tickets.json
   def create
-    @ticket = @project.tickets.build(params[:ticket])
+    @ticket = @project.tickets.build(params[:ticket].merge!(:user => current_user))
 
     respond_to do |format|
       if @ticket.save
@@ -59,10 +60,10 @@ class TicketsController < ApplicationController
   # DELETE /projects/1/tickets/1
   # DELETE /projects/1/tickets/1.json
   def destroy
-    @project.destroy
+    @ticket.destroy
 
     respond_to do |format|
-      format.html { redirect_to projects_url, notice: 'Project has been deleted.' }
+      format.html { redirect_to project_url(@project), notice: 'Ticket has been deleted.' }
       format.json { head :ok }
     end
   end

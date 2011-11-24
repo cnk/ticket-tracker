@@ -1,13 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @ticket.title %>
-</p>
+<h2><%= @ticket.title %></h2>
 
 <p>
-  <b>Project:</b>
-  <%= @project.name %>
+  Created by <%= @ticket.user.email %>
 </p>
 
 <p>

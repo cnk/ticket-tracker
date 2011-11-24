@@ -2,12 +2,16 @@ Feature: viewing tickets
 A user should see tickets for a project on the project details page
 
 Background:
-  Given there is a project named "Textmate 2"
-  And that project has a ticket: 
+  Given there are the following users:
+    | email 	    	      | password |
+    | user@tickets.com	      | password |
+  And I am signed in as them
+  And there is a project named "Textmate 2"
+  And "user@tickets.com" has created a ticket in that project: 
     | title 	    | description            |
     | Make it shiny | Gradients! Starbursts! | 
   And there is a project named "Internet Explorer" 
-  And that project has a ticket:
+  And "user@tickets.com" has created a ticket in that project: 
     | title 	           | description        |
     | Standards compliance | This isn't a joke! | 
   And I am on the home page
