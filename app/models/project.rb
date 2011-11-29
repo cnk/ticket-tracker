@@ -10,6 +10,7 @@
 
 class Project < ActiveRecord::Base
   has_many :tickets
+  attr_accessible :name
   validates :name, :presence => true, 
                    :uniqueness => {:message => "must be unique"},
                    :length => {:maximum => 255}

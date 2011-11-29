@@ -17,13 +17,12 @@ describe TicketsController do
 
   def valid_attributes
     {:title => "Ticket title", 
-     :description => "Ticket description in all its glory.", 
-     :project_id => @project.id}
+      :description => "Ticket description in all its glory."}
   end
 
   describe "GET show" do
     before(:each) do
-      @ticket = Ticket.create!(valid_attributes)
+      @ticket = FactoryGirl.create(:ticket, :project => @project)
       get :show, :project_id => @project.id, :id => @ticket.id
     end
 
@@ -84,7 +83,7 @@ describe TicketsController do
 
   describe "GET 'edit'" do
     it "should retrieve the existing ticket information" do
-      @ticket = Ticket.create!(valid_attributes)
+      @ticket = FactoryGirl.create(:ticket, :project => @project)
       get :edit, :project_id => @project.id, :id => @ticket.id 
       assigns(:ticket).should == @ticket
     end
@@ -92,7 +91,7 @@ describe TicketsController do
 
   describe "PUT update" do
     before(:each) do
-      @ticket = Ticket.create!(valid_attributes)
+      @ticket = FactoryGirl.create(:ticket, :project => @project)
     end
 
     describe "with valid params" do

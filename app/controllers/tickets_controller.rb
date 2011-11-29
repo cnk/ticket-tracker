@@ -26,7 +26,8 @@ class TicketsController < ApplicationController
   # POST /projects/1/tickets
   # POST /projects/1/tickets.json
   def create
-    @ticket = @project.tickets.build(params[:ticket].merge!(:user => current_user))
+    @ticket = @project.tickets.build(params[:ticket])
+    @ticket.user = current_user
 
     respond_to do |format|
       if @ticket.save
