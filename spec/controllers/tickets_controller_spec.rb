@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe TicketsController do
   before(:all) do
-    @project = Factory.create(:project)
-    @user = Factory.create(:user)
+    @project = FactoryGirl.create(:project)
+    @user = FactoryGirl.create(:user)
   end
 
   before(:each) do 

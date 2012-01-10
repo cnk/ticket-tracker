@@ -3,8 +3,8 @@ A user should see tickets for a project on the project details page
 
 Background:
   Given there are the following users:
-    | email 	    	      | password |
-    | user@tickets.com	      | password |
+    | email 	    	      | password | admin |
+    | user@tickets.com	      | password | false |
   And I am signed in as them
   And there is a project named "Textmate 2"
   And "user@tickets.com" has created a ticket in that project: 

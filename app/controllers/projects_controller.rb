@@ -1,5 +1,8 @@
 class ProjectsController < ApplicationController
   before_filter :find_project, :only => [:show, :edit, :update, :destroy]
+  before_filter :except => [:index, :show] do 
+    send(:authorize_admin!, projects_path)
+  end
 
   # GET /projects
   # GET /projects.json

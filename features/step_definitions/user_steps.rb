@@ -1,9 +1,11 @@
 Given /^there are the following users:$/ do |table|
-  # table is a Cucumber::Ast::Table
   table.hashes.each do |attributes|
-    # default to false; the line below only returns true if unconfirmed is "true"
+    # Default unconfirmed to false.
+    # This line only returns true if unconfirmed is defined and set to "true"
     unconfirmed = attributes.delete("unconfirmed") == "true"
     @user = User.create!(attributes)
+    @user.update_attribute("admin", attributes["admin"] == "true")
+    # confirm the user we just created - unless you need it unconfirmed to test sign up proceedure
     @user.confirm! unless unconfirmed
   end
 end

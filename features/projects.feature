@@ -3,6 +3,12 @@ Feature: Managing Projects
   In order to organize my tickets
   I want to put them into projects
 
+Background:
+  Given there are the following users:
+    | email      	      | password  | admin | 
+    | admin@tickets.com	      | password  | true  |
+  And I am signed in as them
+
 Scenario: create new project
   Given I am on the home page
   When I click on "New Project"

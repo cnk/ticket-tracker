@@ -30,10 +30,4 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
-
-  # Add Devise helpers per https://github.com/plataformatec/devise/wiki/How-To%3a-Controllers-and-Views-tests-with-Rails-3-%28and-rspec%29
-  config.include Devise::TestHelpers, :type => :controller
-
-  # Add email macros per http://railscasts.com/episodes/275-how-i-test?view=asciicast
-  config.include(MailerMacros)
 end

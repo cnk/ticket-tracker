@@ -6,8 +6,8 @@ Feature: Creating tickets
 Background: 
   Given there is a project named "Internet Explorer"
   And there are the following users:
-    | email 	    	      | password |
-    | user@tickets.com	      | password |
+    | email 	    	      | password | admin |
+    | user@tickets.com	      | password | false |
   And I am on the home page
   When I click on "Internet Explorer"
   And I click on "New Ticket"
