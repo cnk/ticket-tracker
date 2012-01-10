@@ -1,5 +1,5 @@
-if [[ -s "/home/cnk/.rvm/environments/ruby-1.9.2-p290@rails3.1" ]] ; then
-  . "/home/cnk/.rvm/environments/ruby-1.9.2-p290@rails3.1"
+if [[ -s "/home/cnk/.rvm/environments/ruby-1.9.3-preview1@rails3.1" ]] ; then
+  . "/home/cnk/.rvm/environments/ruby-1.9.3-preview1@rails3.1"
 else
-  rvm --create use  "ruby-1.9.2-p290@rails3.1"
+  rvm --create use  "ruby-1.9.3-preview1@rails3.1"
 fi
