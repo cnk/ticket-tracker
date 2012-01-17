@@ -25,3 +25,11 @@ Scenario: Leaving email blank gives an error message
   And I click the "Create User" button
   Then I should see "User has not been created."
   And I should see "Email can't be blank"
+
+Scenario: Creating an admin user
+  Then I should be on the user creation form
+  When I fill out the new user form with "newadmin@tickets.com" and "password"
+  And I check "Is an admin?"  
+  And I click the "Create User" button
+  Then I should see "User has been created."
+  And I should see "newadmin@tickets.com (Admin)"

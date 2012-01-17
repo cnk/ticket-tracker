@@ -31,4 +31,12 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
   has_many :tickets
+
+  def to_s
+    email + (admin? ? " (Admin)" : '')
+  end
+
+  def is_admin?
+    admin
+  end
 end

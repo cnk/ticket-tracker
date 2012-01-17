@@ -20,6 +20,10 @@ When /^I fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
   page.fill_in field, :with => value
 end
 
+When /^I check "([^"]*)"$/ do |link_text|
+  page.check(link_text)
+end
+
 Then /^I should see "([^"]*)"$/ do |text|
   page.should have_content(text)
 end
