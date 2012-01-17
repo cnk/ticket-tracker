@@ -8,6 +8,6 @@ When /^I change the name to "([^"]*)"$/ do |name|
 end
 
 When /^I create a project named "([^"]*)"$/ do |name|
-  fill_in 'Name', with: name
+  fill_in 'Name', :with => name
   click_button 'Create'
 end

@@ -30,4 +30,9 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+
+  # I want views to render so my controller tests bomb if the view won't render
+  # http://www.simonecarletti.com/blog/2011/04/rspec-rails-doesnt-render-rails-views-by-default/
+  config.render_views
+
 end

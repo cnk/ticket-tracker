@@ -20,3 +20,14 @@ Given /^I am signed in as them$/ do
       Then I should see "Signed in successfully." 
   }) 
 end
+
+Given /^I am signed in as "([^"]*)"$/ do |email|
+  steps(%Q{ 
+      Given I am on the homepage 
+      When I click on "Sign in" 
+      And I fill in "Email" with "#{email}" 
+      And I fill in "Password" with "password" 
+      And I click the "Sign in" button
+      Then I should see "Signed in successfully." 
+  }) 
+end

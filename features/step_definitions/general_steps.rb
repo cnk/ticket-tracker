@@ -29,11 +29,19 @@ Then /^I should not see "([^"]*)"$/ do |text|
 end
 
 Then /^I should see a link to "([^\"]*)"$/ do |link_destination|
-  response.should have_tag("a[href=#{link_destination}]")
+  page.should have_css("a[href=\"#{link_destination}\"]")
 end
 
 Then /^I should not see a link to "([^\"]*)"$/ do |link_destination|
-  response.should_not have_tag("a[href=#{link_destination}]")
+  page.should_not have_css("a[href=\"#{link_destination}\"]")
+end
+
+Then /^I should see the "([^"]*)" link$/ do |link_text|
+  page.should have_link(link_text)
+end
+
+Then /^I should not see the "([^"]*)" link$/ do |link_text|
+  page.should have_no_link(link_text)
 end
 
 Then /^show me the page$/ do

@@ -14,9 +14,42 @@ describe ProjectsController do
     user = FactoryGirl.create(:admin)
   end
 
+  context "no user (not signed in)" do
+    describe "can see the index page" do
+      it "assigns all projects as @projects" do
+        project =  FactoryGirl.create(:project)
+        get :index
+        assigns(:projects).should eq([project])
+      end
+    end
+
+    describe "can see the details page" do
+      before(:each) do
+        @project = FactoryGirl.create(:project)
+        get :show, :id => @project.id
+      end
+
+      it "assigns the requested project as @project" do
+        assigns(:project).should eq(@project)
+      end
+
+      it "displays the tickets for this project" do
+        assigns(:tickets).should eq(@project.tickets)
+      end
+
+      it "does not show an edit link" do
+        response.body.should_not have_link("Edit")
+      end
+
+      it "does not show a delete link" do
+        response.body.should_not have_link("Delete")
+      end
+    end
+  end
+
   context "standard users" do
     before(:each) do
-      sign_in(:user, user)
+     sign_in(:user, user)
     end
 
     describe "can see the index page" do
@@ -60,6 +93,29 @@ describe ProjectsController do
     before(:each) do
       sign_in(:user, admin)
     end
+    
+    describe "can see the details page" do
+      before(:each) do
+        @project = FactoryGirl.create(:project)
+        get :show, :id => @project.id
+      end
+
+      it "assigns the requested project as @project" do
+        assigns(:project).should eq(@project)
+      end
+
+      it "displays the tickets for this project" do
+        assigns(:tickets).should eq(@project.tickets)
+      end
+
+      it "displays an edit link" do
+        response.body.should have_link("Edit", :href => "/projects/#{@project.id}/edit")
+      end
+
+      it "displays a delete link" do
+        response.body.should have_link("Delete", :href => "/projects/#{@project.id}")
+      end
+    end
 
     describe "GET new" do
       it "assigns a new project as @project" do
@@ -72,18 +128,18 @@ describe ProjectsController do
       describe "with valid params" do
         it "creates a new Project" do
           expect {
-            post :create, :project => valid_attributes
+            post :create, :project => FactoryGirl.attributes_for(:project)
           }.to change(Project, :count).by(1)
         end
 
         it "assigns a newly created project as @project" do
-          post :create, :project => valid_attributes
+          post :create, :project => FactoryGirl.attributes_for(:project)
           assigns(:project).should be_a(Project)
           assigns(:project).should be_persisted
         end
 
         it "redirects to the created project" do
-          post :create, :project => valid_attributes
+          post :create, :project => FactoryGirl.attributes_for(:project)
           response.should redirect_to(Project.last)
         end
       end
@@ -107,67 +163,68 @@ describe ProjectsController do
 
     describe "GET edit" do
       it "assigns the requested project as @project" do
-        project = Project.create! valid_attributes
+        project = FactoryGirl.create(:project)
         get :edit, :id => project.id
         assigns(:project).should eq(project)
       end
     end
 
     describe "PUT update" do
+      before(:each) do
+        @project = FactoryGirl.create(:project)
+      end
+
       describe "with valid params" do
         it "updates the requested project" do
-          project = Project.create! valid_attributes
           # Assuming there are no other projects in the database, this
           # specifies that the Project created on the previous line
           # receives the :update_attributes message with whatever params are
           # submitted in the request.
           Project.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-          put :update, :id => project.id, :project => {'these' => 'params'}
+          put :update, :id => @project.id, :project => {'these' => 'params'}
         end
 
         it "assigns the requested project as @project" do
-          project = Project.create! valid_attributes
-          put :update, :id => project.id, :project => valid_attributes
-          assigns(:project).should eq(project)
+          put :update, :id => @project.id, :project => FactoryGirl.attributes_for(:project)
+          assigns(:project).should eq(@project)
         end
 
         it "redirects to the project" do
-          project = Project.create! valid_attributes
-          put :update, :id => project.id, :project => valid_attributes
-          response.should redirect_to(project)
+          put :update, :id => @project.id, :project => FactoryGirl.attributes_for(:project)
+          response.should redirect_to(@project)
         end
       end
 
       describe "with invalid params" do
         it "assigns the project as @project" do
-          project = Project.create! valid_attributes
           # Trigger the behavior that occurs when invalid params are submitted
           Project.any_instance.stub(:save).and_return(false)
-          put :update, :id => project.id, :project => {}
-          assigns(:project).should eq(project)
+          put :update, :id => @project.id, :project => {}
+          assigns(:project).should eq(@project)
         end
 
         it "re-renders the 'edit' template" do
-          project = Project.create! valid_attributes
           # Trigger the behavior that occurs when invalid params are submitted
           Project.any_instance.stub(:save).and_return(false)
-          put :update, :id => project.id, :project => {}
+          put :update, :id => @project.id, :project => {}
           response.should render_template("edit")
         end
       end
     end
 
     describe "DELETE destroy" do
+      before(:each) do
+        @project = FactoryGirl.create(:project)
+      end
+
       it "destroys the requested project" do
-        project = Project.create! valid_attributes
         expect {
-          delete :destroy, :id => project.id
+          delete :destroy, :id => @project.id
         }.to change(Project, :count).by(-1)
       end
 
       it "redirects to the projects list" do
-        project = Project.create! valid_attributes
-        delete :destroy, :id => project.id
+        delete :destroy, :id => @project.id
         response.should redirect_to(projects_url)
       end
     end

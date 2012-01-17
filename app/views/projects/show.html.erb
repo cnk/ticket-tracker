@@ -15,7 +15,9 @@
 </p>
 
 <p>
+<% admins_only do %>
 <%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Delete', @project, confirm: 'Are you sure?', method: :delete %> |
+<%= link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete %> |
+<% end %>
 <%= link_to 'All Projects', projects_path %>
 </p>
