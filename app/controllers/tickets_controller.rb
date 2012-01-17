@@ -8,7 +8,7 @@ class TicketsController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @ticket }
+      format.json { render :json => @ticket }
     end
   end
 
@@ -19,7 +19,7 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @project }
+      format.json { render :json => @project }
     end
   end
 
@@ -31,11 +31,11 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       if @ticket.save
-        format.html { redirect_to [@project, @ticket], notice: 'Ticket has been created.' }
-        format.json { render json: @ticket, status: :created, location: [@project, @ticket] }
+        format.html { redirect_to [@project, @ticket], :notice => 'Ticket has been created.' }
+        format.json { render :json => @ticket, :status => :created, :location => [@project, @ticket] }
       else
-        format.html { render action: "new" }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
+        format.html { render :action => "new" }
+        format.json { render :json => @ticket.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -49,11 +49,11 @@ class TicketsController < ApplicationController
   def update
     respond_to do |format|
       if @ticket.update_attributes(params[:ticket])
-        format.html { redirect_to [@project, @ticket], notice: 'Ticket has been updated.' }
+        format.html { redirect_to [@project, @ticket], :notice => 'Ticket has been updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
+        format.html { render :action => "edit" }
+        format.json { render :json => @ticket.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -64,7 +64,7 @@ class TicketsController < ApplicationController
     @ticket.destroy
 
     respond_to do |format|
-      format.html { redirect_to project_url(@project), notice: 'Ticket has been deleted.' }
+      format.html { redirect_to project_url(@project), :notice => 'Ticket has been deleted.' }
       format.json { head :ok }
     end
   end
