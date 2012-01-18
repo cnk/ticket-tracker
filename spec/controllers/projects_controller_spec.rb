@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe ProjectsController do
-  # This should return the minimal set of attributes required to create a valid Project. 
-  def valid_attributes
-    {:name => "My Project"}
+  before(:each) do
+    @project =  FactoryGirl.create(:project)
   end
 
   let(:user) do
@@ -17,15 +16,13 @@ describe ProjectsController do
   context "no user (not signed in)" do
     describe "can see the index page" do
       it "assigns all projects as @projects" do
-        project =  FactoryGirl.create(:project)
         get :index
-        assigns(:projects).should eq([project])
+        assigns(:projects).should eq([@project])
       end
     end
 
     describe "can see the details page" do
       before(:each) do
-        @project = FactoryGirl.create(:project)
         get :show, :id => @project.id
       end
 
@@ -54,15 +51,13 @@ describe ProjectsController do
 
     describe "can see the index page" do
       it "assigns all projects as @projects" do
-        project =  FactoryGirl.create(:project)
         get :index
-        assigns(:projects).should eq([project])
+        assigns(:projects).should eq([@project])
       end
     end
 
     describe "can see the details page" do
       before(:each) do
-        @project = FactoryGirl.create(:project)
         get :show, :id => @project.id
       end
 
@@ -96,7 +91,6 @@ describe ProjectsController do
     
     describe "can see the details page" do
       before(:each) do
-        @project = FactoryGirl.create(:project)
         get :show, :id => @project.id
       end
 
@@ -163,17 +157,12 @@ describe ProjectsController do
 
     describe "GET edit" do
       it "assigns the requested project as @project" do
-        project = FactoryGirl.create(:project)
-        get :edit, :id => project.id
-        assigns(:project).should eq(project)
+        get :edit, :id => @project.id
+        assigns(:project).should eq(@project)
       end
     end
 
     describe "PUT update" do
-      before(:each) do
-        @project = FactoryGirl.create(:project)
-      end
-
       describe "with valid params" do
         it "updates the requested project" do
           # Assuming there are no other projects in the database, this
@@ -213,10 +202,6 @@ describe ProjectsController do
     end
 
     describe "DELETE destroy" do
-      before(:each) do
-        @project = FactoryGirl.create(:project)
-      end
-
       it "destroys the requested project" do
         expect {
           delete :destroy, :id => @project.id
