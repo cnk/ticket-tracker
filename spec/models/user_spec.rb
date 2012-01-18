@@ -25,4 +25,14 @@ require 'spec_helper'
 
 describe User do
   it { should have_many(:tickets) }
+
+  # email format - good
+  %w(cnk@foo.com cnk@sub.foo.com first.last@example.org).each do |email|
+    it { should allow_value(email).for(:email) }
+  end
+  # email format - bad
+  %w(cnkfoo.com @twit fakefakefake).each do |email|
+    it { should_not allow_value(email).for(:email) }
+  end
+
 end
