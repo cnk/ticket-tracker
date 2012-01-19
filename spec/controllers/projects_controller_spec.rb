@@ -21,26 +21,9 @@ describe ProjectsController do
       end
     end
 
-    describe "can see the details page" do
-      before(:each) do
-        get :show, :id => @project.id
-      end
-
-      it "assigns the requested project as @project" do
-        assigns(:project).should eq(@project)
-      end
-
-      it "displays the tickets for this project" do
-        assigns(:tickets).should eq(@project.tickets)
-      end
-
-      it "does not show an edit link" do
-        response.body.should_not have_link("Edit")
-      end
-
-      it "does not show a delete link" do
-        response.body.should_not have_link("Delete")
-      end
+    it "can not see the details page without logging in" do
+      get :show, :id => @project.id
+      response.should redirect_to(new_user_session_path)
     end
   end
 
@@ -56,17 +39,39 @@ describe ProjectsController do
       end
     end
 
-    describe "can see the details page" do
+    it "can not see the details page for a general project" do
+      get :show, :id => @project.id
+      response.should redirect_to(projects_path)
+      flash[:alert].should == "The project you were looking for cannot be found."
+    end
+
+    it "displays an error when going to the details page for a non-existant project" do
+      get :show, :id => 0
+      response.should redirect_to(projects_path)
+      flash[:alert].should == "The project you were looking for cannot be found."
+    end
+
+    describe "can see the details page for a project it has permission for" do
       before(:each) do
-        get :show, :id => @project.id
+        @myproject = FactoryGirl.create(:project)
+        Permission.create!(:user => user, :thing => @myproject, :action => 'view')
+        get :show, :id => @myproject.id
       end
 
       it "assigns the requested project as @project" do
-        assigns(:project).should eq(@project)
+        assigns(:project).should eq(@myproject)
       end
 
       it "displays the tickets for this project" do
-        assigns(:tickets).should eq(@project.tickets)
+        assigns(:tickets).should eq(@myproject.tickets)
+      end
+
+      it "does not show an edit link" do
+        response.body.should_not have_link("Edit")
+      end
+
+      it "does not show a delete link" do
+        response.body.should_not have_link("Delete")
       end
     end
 

@@ -1,8 +1,9 @@
 class ProjectsController < ApplicationController
-  before_filter :find_project, :only => [:show, :edit, :update, :destroy]
   before_filter :except => [:index, :show] do 
     send(:authorize_admin!, projects_path)
   end
+  before_filter :authenticate_user!, :only => [:show]
+  before_filter :find_project, :only => [:show, :edit, :update, :destroy]
 
   # GET /projects
   # GET /projects.json
@@ -85,7 +86,7 @@ private
 
   def find_project
     begin
-      @project = Project.find(params[:id])
+      @project = current_user.admin? ? Project.find(params[:id]) : Project.readable_by(current_user).find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash[:alert] = "The project you were looking for cannot be found."
       redirect_to projects_path

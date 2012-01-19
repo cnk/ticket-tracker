@@ -7,6 +7,7 @@ Background:
     | email 	    	      | password | admin |
     | user@tickets.com	      | password | false |
   And I am signed in as them
+  And "user@tickets.com" can view the "Textmate 2" project
   And "user@tickets.com" has created a ticket in that project: 
     | title 	    | description            |
     | Make it shiny | Gradients! Starbursts! | 

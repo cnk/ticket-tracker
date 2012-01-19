@@ -7,10 +7,12 @@ Background:
     | user@tickets.com	      | password | false |
   And I am signed in as them
   And there is a project named "Textmate 2"
+  And "user@tickets.com" can view the "Textmate 2" project
   And "user@tickets.com" has created a ticket in that project: 
     | title 	    | description            |
     | Make it shiny | Gradients! Starbursts! | 
   And there is a project named "Internet Explorer" 
+  And "user@tickets.com" can view the "Internet Explorer" project
   And "user@tickets.com" has created a ticket in that project: 
     | title 	           | description        |
     | Standards compliance | This isn't a joke! | 
