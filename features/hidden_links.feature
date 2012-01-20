@@ -8,13 +8,7 @@ Background:
     | admin@tickets.com	      | password  | true  |
     | user@tickets.com	      | password  | false |
   And there is a project named "Project 1"
-
-Scenario: Project admin links are not shown when you are not logged in
-  Given I am on the home page
-  Then I should not see the "New Project" link
-  When I click on "Project 1"
-  Then I should not see the "Edit" link
-  And I should not see the "Delete" link
+  And "user@tickets.com" can view the "Project 1" project
 
 Scenario: Project admin links are not shown when you are logged in as a regular user
   Given I am signed in as "user@tickets.com"

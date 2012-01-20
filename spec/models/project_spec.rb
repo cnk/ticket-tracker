@@ -14,13 +14,10 @@ describe Project do
   it { should validate_presence_of(:name) }
   it { should ensure_length_of(:name).is_at_most(255) }
 
-  it "should require the name to be unique" do
-    project1 = Project.create!(:name => "Cool Project")
-    project1.should be_valid
-    # now try to create another project
-    project2 = Project.new(:name => "Cool Project")
-    project2.save.should be_false
-    project2.should_not be_valid
-    project2.errors.full_messages.should include("Name must be unique")
-  end
+  # Shoulda's uniqueness matcher needs us to have already created at least one project
+  subject { FactoryGirl.create(:project) }
+  it { should validate_uniqueness_of(:name).with_message(/must be unique/) }
+
+  it {should have_many(:tickets) }
+  it {should have_many(:permissions) }
 end

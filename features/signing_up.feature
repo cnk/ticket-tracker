@@ -10,3 +10,6 @@ Scenario: Signing up
   And I fill in "Password confirmation" with "badpass"
   And I click the "Sign up" button
   Then I should see "You have signed up successfully."
+  And I should see "Please confirm your account before signing in." 
+
+

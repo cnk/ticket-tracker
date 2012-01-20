@@ -25,6 +25,7 @@ require 'spec_helper'
 
 describe User do
   it { should have_many(:tickets) }
+  it { should have_many(:permissions) }
 
   # email format - good
   %w(cnk@foo.com cnk@sub.foo.com first.last@example.org).each do |email|
@@ -35,4 +36,7 @@ describe User do
     it { should_not allow_value(email).for(:email) }
   end
 
+  %w(admin encrypted_password sign_in_count password_salt confirmation_token confirmed_at).each do |column|
+    it { should_not allow_mass_assignment_of(column) }
+  end
 end

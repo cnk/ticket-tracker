@@ -14,15 +14,8 @@ describe ProjectsController do
   end
 
   context "no user (not signed in)" do
-    describe "can see the index page" do
-      it "assigns all projects as @projects" do
-        get :index
-        assigns(:projects).should eq([@project])
-      end
-    end
-
-    it "can not see the details page without logging in" do
-      get :show, :id => @project.id
+    it "can not see the projects page without logging in" do
+      get :index
       response.should redirect_to(new_user_session_path)
     end
   end
@@ -30,19 +23,13 @@ describe ProjectsController do
   context "standard users" do
     before(:each) do
      sign_in(:user, user)
+      @myproject = FactoryGirl.create(:project)
+      Permission.create!(:user => user, :thing => @myproject, :action => 'view')
     end
 
-    describe "can see the index page" do
-      it "assigns all projects as @projects" do
-        get :index
-        assigns(:projects).should eq([@project])
-      end
-    end
-
-    it "can not see the details page for a general project" do
-      get :show, :id => @project.id
-      response.should redirect_to(projects_path)
-      flash[:alert].should == "The project you were looking for cannot be found."
+    it "Only sees their projects on the index page" do
+      get :index
+      assigns(:projects).should eq([@myproject])
     end
 
     it "displays an error when going to the details page for a non-existant project" do
@@ -51,10 +38,14 @@ describe ProjectsController do
       flash[:alert].should == "The project you were looking for cannot be found."
     end
 
+    it "can not see the details page for a general project" do
+      get :show, :id => @project.id
+      response.should redirect_to(projects_path)
+      flash[:alert].should == "The project you were looking for cannot be found."
+    end
+
     describe "can see the details page for a project it has permission for" do
       before(:each) do
-        @myproject = FactoryGirl.create(:project)
-        Permission.create!(:user => user, :thing => @myproject, :action => 'view')
         get :show, :id => @myproject.id
       end
 

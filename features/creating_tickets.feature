@@ -10,12 +10,12 @@ Background:
     | user@tickets.com	      | password | false |
   And "user@tickets.com" can view the "Internet Explorer" project
   And I am on the home page
-  When I click on "Internet Explorer"
   Then I should see "You need to sign in or sign up before continuing."
   When I fill in "Email" with "user@tickets.com"
   And I fill in "Password" with "password"
   And I click the "Sign in" button
   # We should be back on the project page, ready to create a ticket
+  When I click on "Internet Explorer"
   When I click on "New Ticket"
   Then I should see "New ticket"
 
