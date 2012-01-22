@@ -15,11 +15,6 @@ describe TicketsController do
     @user.destroy
   end
 
-  def valid_attributes
-    {:title => "Ticket title", 
-      :description => "Ticket description in all its glory."}
-  end
-
   describe "GET show" do
     before(:each) do
       @ticket = FactoryGirl.create(:ticket, :project => @project)
@@ -54,12 +49,12 @@ describe TicketsController do
     describe "with valid params" do
       it "creates a new Ticket" do
         expect {
-          post :create, :project_id => @project.id, :ticket => valid_attributes
+          post :create, :project_id => @project.id, :ticket => FactoryGirl.attributes_for(:ticket)
         }.to change(Ticket, :count).by(1)
       end
 
       it "redirects to the created ticket" do
-        post :create, :project_id => @project.id, :ticket => valid_attributes
+        post :create, :project_id => @project.id, :ticket => FactoryGirl.attributes_for(:ticket)
         response.should redirect_to([@project, assigns(:ticket)])
       end
     end
@@ -96,7 +91,6 @@ describe TicketsController do
 
     describe "with valid params" do
       it "updates the ticket information" do
-        @ticket.title.should == valid_attributes[:title]
         put :update, :id => @ticket.id, :project_id => @project.id, :ticket => {:title => "New name", :description => "New description"}
         Ticket.find(@ticket.id).title.should == "New name"
       end
