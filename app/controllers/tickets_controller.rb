@@ -1,7 +1,8 @@
 class TicketsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:index, :show]
+  before_filter :authenticate_user!
   before_filter :find_project
   before_filter :find_ticket, :only => [:show, :edit, :update, :destroy]
+  before_filter :authorize_create!, :only => [:new, :create]
 
   # GET /projects/1/tickets/1
   # GET /projects/1/tickets/1.json
@@ -73,10 +74,22 @@ class TicketsController < ApplicationController
 private
 
   def find_project
-    @project = Project.find(params[:project_id])
+    begin
+      @project = Project.for(current_user).find(params[:project_id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "The project you were looking for cannot be found."
+      redirect_to root_path
+    end
   end
 
   def find_ticket
     @ticket = @project.tickets.find(params[:id])
+  end
+
+  def authorize_create!
+    if !current_user.admin? && cannot?("create tickets".to_sym, @project)
+      flash[:alert] = "You cannot create tickets on this project."
+      redirect_to(project_path(@project))
+    end
   end
 end

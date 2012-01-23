@@ -9,6 +9,7 @@ Background:
     | email 	    	      | password | admin |
     | user@tickets.com	      | password | false |
   And "user@tickets.com" can view the "Internet Explorer" project
+  And "user@tickets.com" can create tickets in the "Internet Explorer" project
   And I am on the home page
   Then I should see "You need to sign in or sign up before continuing."
   When I fill in "Email" with "user@tickets.com"
