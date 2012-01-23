@@ -14,8 +14,8 @@ class Project < ActiveRecord::Base
                    :uniqueness => {:message => "must be unique"},
                    :length => {:maximum => 255}
 
-  has_many :tickets
-  has_many :permissions, :as => :thing
+  has_many :tickets, :dependent => :destroy
+  has_many :permissions, :as => :thing, :dependent => :destroy
 
   scope :readable_by, lambda{ |user| joins(:permissions).where(:permissions => { :action => 'view',
                                                                                  :user_id => user.id })}

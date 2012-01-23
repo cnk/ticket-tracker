@@ -24,8 +24,8 @@
 require 'spec_helper'
 
 describe User do
-  it { should have_many(:tickets) }
-  it { should have_many(:permissions) }
+  it { should have_many(:tickets).dependent(:nullify) }
+  it { should have_many(:permissions).dependent(:destroy) }
 
   # email format - good
   %w(cnk@foo.com cnk@sub.foo.com first.last@example.org).each do |email|

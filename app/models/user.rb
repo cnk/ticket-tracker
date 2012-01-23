@@ -30,8 +30,8 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
-  has_many :tickets
-  has_many :permissions
+  has_many :tickets, :dependent => :nullify
+  has_many :permissions, :dependent => :destroy
 
   def to_s
     email + (admin? ? " (Admin)" : '')

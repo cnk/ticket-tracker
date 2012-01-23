@@ -18,6 +18,6 @@ describe Project do
   subject { FactoryGirl.create(:project) }
   it { should validate_uniqueness_of(:name).with_message(/must be unique/) }
 
-  it {should have_many(:tickets) }
-  it {should have_many(:permissions) }
+  it {should have_many(:tickets).dependent(:destroy) }
+  it {should have_many(:permissions).dependent(:destroy) }
 end
