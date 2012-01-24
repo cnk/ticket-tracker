@@ -11,13 +11,15 @@
 </ol>
 
 <p>
-<%= link_to 'New Ticket', new_project_ticket_path(@project) %>
+<% authorized?("create tickets", @project) do %>
+  <%= link_to 'New Ticket', new_project_ticket_path(@project) %>
+<% end %>
 </p>
 
 <p>
 <% admins_only do %>
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to 'Edit', edit_project_path(@project) %> |
+  <%= link_to 'Delete', @project, :confirm => 'Are you sure?', :method => :delete %> |
 <% end %>
 <%= link_to 'All Projects', projects_path %>
 </p>

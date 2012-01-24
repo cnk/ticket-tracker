@@ -8,6 +8,8 @@ Background:
     | user@tickets.com	      | password | false |
   And I am signed in as them
   And "user@tickets.com" can view the "Textmate 2" project
+  And "user@tickets.com" can edit tickets in the "Textmate 2" project
+  And "user@tickets.com" can delete tickets in the "Textmate 2" project
   And "user@tickets.com" has created a ticket in that project: 
     | title 	    | description            |
     | Make it shiny | Gradients! Starbursts! | 
